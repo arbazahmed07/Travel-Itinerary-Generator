@@ -1,163 +1,156 @@
 {% extends "headers.html" %}
 {% block content %}
-    <!-- Main Content -->
-    
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
 
-    <main>
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <h1 class="text-center">Travel Itinerary Generator</h1>
-          </div>
-        </div>
-      <!--
-      DESCRIPTION: This code block contains a form that allows users to input their boarding point, destination, and date of travel. 
-      The form has a submit button that sends the user's input to the server for processing.
-      -->
-      <form action="/" method="POST" class="form-inline">
-        <div class="form-group">
-          <label for="source">From:</label>
-          <input
-            type="text"
-            class="form-control"
-            name="source"
-            id="source"
-            placeholder="Enter your boarding point"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="destination">To:</label>
-          <input
-            type="text"
-            class="form-control"
-            name="destination"
-            id="destination"
-            placeholder="Enter your destination"
-            required
-          />
-        </div>
-        <span class="form-group">
-          <label for="date">Travel Date:</label>
-          <input type="date" class="form-control" name="date" id="date"required/>
-          <label for="return">Return Date:</label>
-          <input type="date" class="form-control" name="return" id="return" required/>
-        </span>
-        
-        
+    body {
+        background-image: url('https://w0.peakpx.com/wallpaper/43/30/HD-wallpaper-travel-couple-lifestyle.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        font-family: 'Arial', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-        <button style="margin-top: 5px; padding: 4px;" type="submit" class="btn btn-primary">Submit</button>
-        
-          <div  class="container d-flex justify-content-center align-items-center">
-            <div class="text-center">
-              <img id="loading"  style="display: none;" src="{{url_for('static',filename='loading.gif')}}" alt="Loading..." />
+    main {
+        background-color: rgba(255, 255, 255, 0.5); /* Set background to transparent with some opacity */
+        border-radius: 15px;
+        padding: 40px;
+        max-width: 600px;
+        width: 100%;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        border: 1.5px solid #4a90e2;
+        padding: 10px;
+    }
+
+    .btn-primary {
+        background-color: #4a90e2;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 25px;
+        transition: background-color 0.3s ease;
+        width: 100%;
+    }
+
+    .btn-primary:hover {
+        background-color: #357abd;
+    }
+
+    .floating-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+
+    .floating-button {
+        background-color: #4a90e2;
+        color: white;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .element-container {
+        display: none;
+        position: absolute;
+        bottom: 70px;
+        right: 0;
+    }
+
+    .floating-button:hover .element-container {
+        display: block;
+    }
+
+    .float-element {
+        display: block;
+        margin: 10px;
+        color: white;
+        background-color: #4a90e2;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .float-element:hover {
+        background-color: #357abd;
+    }
+</style>
+
+<main>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8">
+                <h1 class="text-center mb-4">Travel Itinerary Generator</h1>
+                <form action="/" method="POST" class="form-inline">
+                    <div class="form-group">
+                        <label for="source" class="form-label">From:</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="source"
+                            id="source"
+                            placeholder="Enter your boarding point"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="destination" class="form-label">To:</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="destination"
+                            id="destination"
+                            placeholder="Enter your destination"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="date" class="form-label">Travel Date:</label>
+                        <input type="date" class="form-control" name="date" id="date" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="return" class="form-label">Return Date:</label>
+                        <input type="date" class="form-control" name="return" id="return" required/>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+
+                    <div class="container d-flex justify-content-center align-items-center">
+                        <div class="text-center">
+                            <img id="loading" style="display: none;" src="{{url_for('static',filename='loading.gif')}}" alt="Loading..." />
+                        </div>
+                    </div>
+                </form>
             </div>
-          </div>
- 
-      </form>
-    </main>
+        </div>
+    </div>
+</main>
 
-
-    
-    <!-- Share Icon -->
-    <div class="floating-container">
-      <div class="floating-button">
-          <i class="fa-solid fa-share-from-square"></i>
-      </div>
-      <!-- Elements -->
-      <div class="element-container">
-          <!-- Facebook -->
-          <a class="float-element" href="https://www.facebook.com/sharer/sharer.php?u=https%3A//sanjeev02.pythonanywhere.com/" target="_blank"> 
-              <span>
-              <i class="fa-brands fa-facebook"></i>
-          </a>
-
-          <!-- WhatsApp -->
-          </span>
-          <a class="float-element" href="https://api.whatsapp.com/send?text=Check%20out%20this%20page:%20https://sanjeev02.pythonanywhere.com" target="_blank">
-          <span>
-              <i class="fa-brands fa-whatsapp"></i>
-          </span>
-          </a>
-
-          <!-- Twitter or X -->
-          <a class="float-element" href="https://twitter.com/intent/tweet?text=Check%20out%20this%20page:%20https://sanjeev02.pythonanywhere.com" target="_blank">
-          <span>
-              <i class="fa-brands fa-x-twitter"></i>
-          </span>
-          </a>
-
-          <!-- LinkedIn -->
-          <a class="float-element" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//sanjeev02.pythonanywhere.com" target="_blank">
-          <span >
-              <i class="fa-brands fa-linkedin"></i>
-          </span>
-          </a>
-
-          <!-- Telegram -->
-          <a class="float-element" href="https://t.me/share?url=https%3A%2F%2Fsanjeev02.pythonanywhere.com%2F&text=Check%20this%20out" target="_blank">
-          <span >
-              <i class="fa-brands fa-telegram"></i>
-          </span>
-          </a>
-          
-      </div>
-  </div>
-
-    <!-- Footer -->
-
-    <footer
-      class="jumbotron text-center text-white fixed-bottom"
-      style="background-color: #030303"
-    >
-      <!-- Copyright -->
-      <div
-        class="text-center p-3"
-        style="background-color: rgba(255, 255, 255, 0)"
-      >
-        <p>&copy {{now.year}} Copyright</p>
-        <p>
-          Made With 🩷 By
-          <a style="color: #0ed9ddd6; text-decoration: none" href="#"
-            >Sanjeev</a
-          >
-        </p>
-      </div>
-    </footer>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
-
-    <!-- 
-    This script sets a timeout function to remove all elements with the class "alert" after a certain duration. 
-    It first sets the opacity of the elements to 0 to initiate the transition, and then removes the elements after the transition duration. 
-    The delay for the transition duration can be adjusted by changing the value of the second setTimeout function. 
-    -->
-    <script>
-      setTimeout(function () {
-        const alerts = document.querySelectorAll(".alert");
-
-        alerts.forEach(function (alert) {
-          // Set opacity to 0 to initiate the transition
-          alert.style.opacity = 0;
-        });
-
-        // After the transition duration, remove the alert elements
-        setTimeout(function () {
-          alerts.forEach(function (alert) {
-            alert.style.display = "none";
-          });
-        }, 1000); // Adjust this delay to match your transition duration (in this case, 1 second)
-      }, 5000); // Adjust this delay to match your transition duration (in this case, 3 seconds)
-
-      // Load the loading gif on click or enter of submit button in form
-      document.querySelector('form').addEventListener('submit', function() {
-        document.getElementById('loading').style.display = 'block';
-      });
-  </script>
-  
-    {% endblock %}
-    </body>
+{% endblock %}
 </html>

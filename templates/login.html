@@ -2,116 +2,127 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>Login Page</title>
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <!-- Google Fonts Roboto -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
-    />
-    <!-- MDB -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-
-    <!-- This code block includes a link to the favicon. -->
-    <link rel="icon" href="{{ url_for('static',filename='logo.svg') }}" />
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
     <style>
       body {
-        background: linear-gradient(to right, #44579c 0%, #883893d2 100%),
-          url("https://mdbootstrap.com/img/new/standard/city/044.jpg");
+        font-family: 'Roboto', sans-serif;
+        background: url("https://w0.peakpx.com/wallpaper/43/30/HD-wallpaper-travel-couple-lifestyle.jpg") center center / cover no-repeat fixed;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        overflow: hidden;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(15px);
+        border-radius: 15px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        max-width: 400px;
+        width: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+      }
+
+      .card-body {
+        padding: 2rem;
+      }
+
+      h2 {
+        font-weight: 700;
+        color: #333;
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .form-control {
+        background: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(0,0,0,0.2);
+        color: #333;
+        border-radius: 8px;
+        padding: 0.75rem;
+        transition: all 0.3s ease;
+      }
+
+      .form-control::placeholder {
+        color: #666;
+      }
+
+      .form-control:focus {
+        background: white;
+        border-color: #007bff;
+        box-shadow: 0 0 10px rgba(0,123,255,0.2);
+      }
+
+      .btn-dark {
+        background-color: #007bff;
+        border: none;
+        color: #fff;
+        width: 100%;
+        padding: 0.75rem;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+      }
+
+      .btn-dark:hover {
+        background-color: #0056b3;
+      }
+
+      .text-muted a {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .text-muted a:hover {
+        text-decoration: underline;
       }
     </style>
   </head>
   <body>
-    <!-- Section: Design Block -->
-    <section class="text-center">
-      <!-- Background image -->
-      <div class="px-md-4" style="height: 300px"></div>
-      <!-- Background image -->
-
-      <div
-        class="card mx-4 mx-md-5 shadow-5-strong"
-        style="
-          margin-top: -100px;
-          background: hsla(0, 9%, 93%, 0.8);
-          backdrop-filter: blur(30px);
-        "
-      >
-        <div class="card-body py-5 px-md-4">
-          <div class="row d-flex justify-content-center">
-            <div class="col-8">
-              <h2 class="fw-bold mb-5">Login</h2>
-              <!-- Flash Messages Container -->
-              {% with messages = get_flashed_messages(with_categories=true) %}
-              {% if messages %}
-              <div class="container">
-                {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">{{ message }}</div>
-                {% endfor %}
-              </div>
-              {% endif %} {% endwith %}
-              <form action="/login" method="POST">
-                <!-- Email input -->
-                <div class="mb-4">
-                  <!-- <label class="form-label" for="form3Example3"
-                    >Email address:</label> -->
-                  <input
-                    type="email"
-                    class="form-control"
-                    placeholder="Email address"
-                    name="email"
-                    required
-                  />
-                </div>
-
-                <!-- Password input -->
-                <div class="form-outline mb-4">
-                    <input type="password" name="password" id="inputPassword6" class="form-control" placeholder="Password" required>
-                </div>
-                <!-- Submit button -->
-                <button type="submit" class="btn btn-dark btn-block mb-4">
-                  Login
-                </button>
-                <!-- Register link -->
-                <p class="text-center text-muted mt-5 mb-0">
-                  Not a member?
-                  <a href="/register" class="fw-bold text-body"
-                    ><u>Register</u></a
-                  >
-                </p>
-              </form>
-            </div>
-          </div>
+    <div class="card">
+      <div class="card-body">
+        <h2>Login</h2>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="container">
+          {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
         </div>
+        {% endif %}
+        {% endwith %}
+        <form action="" method="POST">
+          <div class="mb-4">
+            <input type="email" class="form-control" placeholder="Email address" name="email" required />
+          </div>
+          <div class="mb-4">
+            <input type="password" class="form-control" placeholder="Password" name="password" required />
+          </div>
+          <button type="submit" class="btn btn-dark">Login</button>
+          <p class="text-center text-muted mt-3">
+            Not a member? <a href="/register" class="fw-bold">Register</a>
+            <br>
+            <a href="/">Home</a>
+          </p>
+        
+        </form>
       </div>
-    </section>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script>
-      <!-- Add this script to automatically hide flash messages after 5 seconds -->
-
       setTimeout(function () {
         document.querySelectorAll(".alert").forEach(function (alert) {
           alert.style.display = "none";
         });
-      }, 5000); // Flash messages will disappear after 5 seconds (5000 milliseconds)
+      }, 5000);
     </script>
   </body>
 </html>
